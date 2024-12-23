@@ -1,0 +1,46 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'Table_Rollno.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Sheet</title> 
+    
+</head>
+<body>
+    {% if error_message %}
+    <div class="error-message">
+        <p>{{ error_message }}</p>
+    </div>
+    {% else %}
+    <div class="container">
+        <h1>Attendance Sheet</h1> <a href="{% url 'export_excel'  %}" class="fancy-link">Generate Excel Sheet</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Roll Numbers</th>
+                    <th>Total Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject,roll_numbers in dictionary_of_subjects.items %}
+                <tr>
+                    <td>{{ subject }}</td>
+
+                    <td>{% for roll_number in roll_numbers %} {{roll_number}}, {% endfor %}</td>
+                    <td class="total-count">{{ roll_numbers|length }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="footer">
+            <p>Attendance Sheet Generated on {{current_date_time}}</p>
+            <p>Developed and Maintained by Maloof Bashir...😂</p>
+        </div>
+    </div>
+    {% endif %}
+</body>
+
+</html>
